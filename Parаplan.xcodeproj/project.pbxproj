@@ -49,7 +49,7 @@
 				5088EB392E93ADE700AAD3AC /* schedule.h */,
 				5088EB382E93ADDB00AAD3AC /* lesson.h */,
 				5088EB372E93ADCE00AAD3AC /* config.h */,
-				5060E9E92E8A86420072DA6E /* Parаplan */,
+				5060E9E92E8A86420072DA6E /* app */,
 				5060E9E82E8A86420072DA6E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,12 +62,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5060E9E92E8A86420072DA6E /* Parаplan */ = {
+		5060E9E92E8A86420072DA6E /* app */ = {
 			isa = PBXGroup;
 			children = (
 				5060E9EA2E8A86420072DA6E /* main.cpp */,
 			);
-			path = "Parаplan";
+			path = app;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

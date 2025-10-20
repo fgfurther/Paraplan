@@ -1,5 +1,7 @@
 #include "genetic_algorithm.h"
 #include <iostream>
+#include <windows.h> 
+
 void printSchedule(const Schedule& s, int index) {
     auto fitness = s.calculateFitness();
     std::cout << "\n=== Расписание " << index + 1 << " (Конфликты = " << fitness[0]
@@ -26,6 +28,8 @@ void printSchedule(const Schedule& s, int index) {
 }
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     GeneticAlgorithm ga;
     std::vector<Schedule> pareto_front = ga.run();
     std::cout << "\n=== Найдено " << pareto_front.size() << " Парето-оптимальных расписаний ===\n";
