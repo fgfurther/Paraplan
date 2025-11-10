@@ -165,7 +165,7 @@ public:
             bool no_conflicts = false;
             for (auto& ind : pop) {
                 auto fitness = ind.schedule.calculateFitness();
-                if (ind.rank == 0 && fitness[0] == 0) {
+                if (fitness[0] < 0.1) {
                     no_conflicts = true;
                     break;
                 }

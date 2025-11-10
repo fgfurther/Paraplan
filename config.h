@@ -11,21 +11,21 @@ namespace Config {
     const int NUM_SUBJECTS = 5;
     const int SLOTS_PER_DAY = 6;
     const int NUM_DAYS = 6; // включая субботу
-    const int POPULATION_SIZE = 10;
-    const int MAX_GENERATIONS = 500;
-    const double MUTATION_RATE = 0.1;
+    const int LESSONS_PER_GROUP_PER_DAY = 4; // ИЗМЕНЕНО: было 2 → теперь 4 пары в день
+    const int POPULATION_SIZE = 50;         
+    const int MAX_GENERATIONS = 500;       
+    const double MUTATION_RATE = 0.15;      
 
     // Весовые коэффициенты для фитнеса
     struct FitnessWeights {
-        double hard_conflict = 0.7;         // За каждый конфликт преподавателя / комнаты / группы
-        double soft_gap = 0.02;               // За окна в расписании
-        double soft_balance = 0.02;           // За неравномерное распределение
-        double capacity_conflict = 0.02;     // За нехватку мест
-        double type_conflict = 0.02;         // За неподходящий класс аудитории
-        double teacher_load = 0.2;           // За отклонение от желаемой нагрузки
-        double teacher_pref = 0.02;           // За занятия в нежелательные дни
+        double hard_conflict = 0.7;
+        double soft_gap = 0.02;
+        double soft_balance = 0.02;
+        double capacity_conflict = 0.02;
+        double type_conflict = 0.02;
+        double teacher_load = 0.2;      // Отклонение от целевой нагрузки в часах
+        double teacher_pref = 0.02;
     };
-
     inline FitnessWeights weights;
 
     // Тестовые данные
@@ -51,18 +51,23 @@ namespace Config {
         {3, 3}, {3, 4}, {4, 0}, {4, 4}
     };
 
-    // === Предпочтения преподавателей ===
-    // Желаемая недельная нагрузка (в количестве пар)
-    inline std::unordered_map<int, int> teacher_desired_load = {
-        {0, 8}, {1, 10}, {2, 12}, {3, 8}, {4, 6}
-    };
+    // === ТРУДОВАЯ НАГРУЗКА В ЧАСАХ В НЕДЕЛЮ НА 3 ГРУППЫ === ДОБАВЛЕНО
+    inline std::vector<int> teacher_semester_hours = { 9, 9, 12, 15, 15 };
 
     // Предпочтительные дни недели (0=Пн, 1=Вт, 2=Ср, 3=Чт, 4=Пт, 5=Сб)
     inline std::unordered_map<int, std::vector<int>> teacher_preferred_days = {
-        {0, {0, 1, 2, 3}},       // Иванов: Пн–Чт
-        {1, {0, 1, 2, 3, 4}},    // Смирнов: Пн–Пт
-        {2, {1, 2, 3}},          // Петров: Вт–Чт
-        {3, {0, 1, 2, 3, 4}},    // Соболев: Пн–Пт
-        {4, {0, 1, 2}}           // Едреев: Пн–Ср
+        {0, {0,1,2,3}}, {1, {0,1,2,3,4}}, {2, {1,2,3}}, {3, {0,1,2,3,4}}, {4, {0,1,2}}
     };
+
+    // === Вспомогательная функция: целевое количество пар === ДОБАВЛЕНО
+    inline std::vector<int> get_target_pairs() {
+        std::vector<int> target;
+        for (int h : teacher_semester_hours) {
+            int pairs = static_cast<int>(std::round(h / 1.5));
+            target.push_back(pairs);
+        }
+        return target;
+    }
+
+    // УДАЛЕНО: teacher_desired_load — больше не используется
 }
