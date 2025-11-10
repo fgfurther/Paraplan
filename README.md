@@ -1,2 +1,2 @@
 # Paraplan
-Generation schedule for institute based on genetic algorithm
+Generator of schedule for institute based on genetic algorithm
